@@ -1,0 +1,22 @@
+.idea/
+*.iws
+*.iml
+out/
+build/
+bin/
+gen/
+
+.gradle/
+
+local.properties
+
+gradle.properties
+
+# Android Studio Navigation editor temp files
+.navigation/
+
+# Android Studio captures folder
+captures/
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
