@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.main_container, GameBoardFragment.newFragment())
+                .replace(R.id.main_container, HistoryFragment.newFragment())
                 .commit()
         }
     }
