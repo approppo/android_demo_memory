@@ -3,12 +3,13 @@ package ch.approppo.memory
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.NavigationView
+import android.support.v4.app.Fragment
+import android.support.v4.view.GravityCompat
+import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.AppCompatActivity
-import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
-import kotlin.random.Random
+import android.view.MenuItem
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,81 +17,76 @@ class MainActivity : AppCompatActivity() {
         fun newIntent(ctx: Context) = Intent(ctx, MainActivity::class.java)
     }
 
-    private lateinit var tvScore: TextView
-
-    private var cards = mutableMapOf<Button, String>()
-
-    private var count = 0
-
-    private var firstCard: Button? = null
-    private var secondCard: Button? = null
-    private var matchedCards = mutableListOf<Button>()
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val emojis = mutableListOf("🐵", "🐶", "🐱", "🐻", "🦁", "🐮", "🐨", "🐷", "🐸", "🐔", "🦆", "🦅", "🦉", "🦄", "🐙", "🐘", "🦍", "🦓")
 
-        tvScore = findViewById(R.id.tv_score)
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navigationView = findViewById(R.id.nav_view)
+        navigationView.setNavigationItemSelectedListener {
 
-        val tmpCards = mutableListOf<Button>()
-        findButtons(tmpCards, findViewById(R.id.game_board))
-        for (i in 0 until tmpCards.size / 2) {
-            val emoji = emojis.removeAt(Random.nextInt(emojis.size))
-            cards[tmpCards.removeAt(Random.nextInt(tmpCards.size))] = emoji
-            cards[tmpCards.removeAt(Random.nextInt(tmpCards.size))] = emoji
+            if (!it.isChecked) {
+                when (it.itemId) {
+                    R.id.nav_action_game -> {
+                        replaceFragment(GameBoardFragment.newFragment())
+                        it.isChecked = true
+                        drawerLayout.closeDrawer(GravityCompat.START)
+                    }
+                    R.id.nav_action_history -> {
+                        it.isChecked = true
+                        drawerLayout.closeDrawer(GravityCompat.START)
+                    }
+                    R.id.nav_action_ranking -> {
+                        it.isChecked = true
+                        drawerLayout.closeDrawer(GravityCompat.START)
+                    }
+                    R.id.nav_action_profile -> {
+                        it.isChecked = true
+                        drawerLayout.closeDrawer(GravityCompat.START)
+                    }
+                }
+            } else {
+                drawerLayout.closeDrawer(GravityCompat.START)
+            }
+            true
+        }
+
+        val actionbar = supportActionBar!!
+        actionbar.setDisplayHomeAsUpEnabled(true)
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu)
+
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.main_container, GameBoardFragment.newFragment())
+                .commit()
         }
     }
 
-    private fun findButtons(tmpCards: MutableList<Button>, parentLayout: LinearLayout) {
-        for (i in 0 until parentLayout.childCount) {
-            val child = parentLayout.getChildAt(i)
-            if (child is Button) {
-                tmpCards.add(child)
-            } else if (child is LinearLayout) {
-                findButtons(tmpCards, child)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                } else {
+                    drawerLayout.openDrawer(GravityCompat.START)
+                }
+                return true
             }
         }
+        return super.onOptionsItemSelected(item)
     }
 
-    fun flipCard(view: View) {
-        val button = view as Button
-        if (button.text.toString().isBlank()) {
-            flipUp(button)
-
-            if (firstCard != null && secondCard != null) {
-                flipDown(firstCard!!)
-                flipDown(secondCard!!)
-                firstCard = null
-                secondCard = null
-            }
-
-            if (firstCard == null) {
-                firstCard = button
-            } else if (secondCard == null) {
-                secondCard = button
-                validateCards()
-            }
-        }
-    }
-
-    private fun flipDown(button: Button) {
-        if (!matchedCards.contains(button)) {
-            button.text = ""
-            button.setBackgroundColor(resources.getColor(android.R.color.holo_green_dark))
-        }
-    }
-
-    private fun flipUp(button: Button) {
-        button.setBackgroundColor(resources.getColor(android.R.color.darker_gray))
-        button.text = cards[button]
-        tvScore.text = "Flips: ${++count}"
-    }
-
-    private fun validateCards() {
-        if (firstCard!!.text == secondCard!!.text) {
-            matchedCards.add(firstCard!!)
-            matchedCards.add(secondCard!!)
+    private fun replaceFragment(newFragment: Fragment) {
+        val fragment = supportFragmentManager.findFragmentById(R.id.main_container)
+        if (fragment != null && fragment::class != newFragment::class) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.main_container, newFragment)
+                .commit()
         }
     }
 }
