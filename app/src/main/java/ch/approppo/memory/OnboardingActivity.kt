@@ -2,22 +2,51 @@ package ch.approppo.memory
 
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_onboarding.bt_goto_login
-import kotlinx.android.synthetic.main.activity_onboarding.bt_goto_registration
 
-class OnboardingActivity : AppCompatActivity() {
+class OnboardingActivity : AppCompatActivity(), OnboardingFlowCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (PreferenceManager.getDefaultSharedPreferences(this).contains(RegistrationActivity.KEY_TOKEN)) {
+        if (PreferenceManager.getDefaultSharedPreferences(this).contains(RegistrationFragment.KEY_TOKEN)) {
             startActivity(MainActivity.newIntent(this))
             finish()
             return
         }
 
         setContentView(R.layout.activity_onboarding)
-        bt_goto_login.setOnClickListener { startActivity(LoginActivity.newIntent(this)) }
-        bt_goto_registration.setOnClickListener { startActivity(RegistrationActivity.newIntent(this)) }
+
+        if (savedInstanceState == null) {
+            replaceFragment(OnboardingFragment.newFragment())
+        }
+    }
+
+    override fun startRegistration() {
+        replaceFragment(RegistrationFragment.newFragment())
+    }
+
+    override fun startLogin() {
+
+    }
+
+    override fun nextFromRegistration() {
+        replaceFragment(AGBFragment.newFragment())
+    }
+
+    override fun nextFromAGB() {
+        replaceFragment(ProfileFragment.newFragment())
+    }
+
+    override fun nextFromProfile() {
+        startActivity(MainActivity.newIntent(this))
+        finish()
+    }
+
+    private fun replaceFragment(newFragment: Fragment) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_container, newFragment)
+            .commit()
     }
 }

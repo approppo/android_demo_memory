@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:paddingStart="36dp"
         android:paddingEnd="36dp"
-        tools:context=".RegistrationActivity">
+        tools:context=".RegistrationFragment">
 
     <EditText
             android:layout_width="match_parent"
