@@ -5,6 +5,7 @@
         package="ch.approppo.memory">
 
     <application
+            android:name=".MemoryApp"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
@@ -12,18 +13,20 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".OnboardingActivity">
+        <activity android:name=".features.onboarding.OnboardingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".RegistrationActivity"></activity>
-        <activity android:name=".AGBActivity"></activity>
-        <activity android:name=".ProfileActivity"></activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".features.home.MainActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
     </application>
 
 </manifest>
