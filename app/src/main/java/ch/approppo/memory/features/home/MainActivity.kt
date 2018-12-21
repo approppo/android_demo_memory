@@ -1,4 +1,4 @@
-package ch.approppo.memory
+package ch.approppo.memory.features.home
 
 import android.content.Context
 import android.content.Intent
@@ -9,6 +9,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import ch.approppo.memory.R
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,28 +30,18 @@ class MainActivity : AppCompatActivity() {
         navigationView.setNavigationItemSelectedListener {
 
             if (!it.isChecked) {
+                it.isChecked = true
                 when (it.itemId) {
-                    R.id.nav_action_game -> {
-                        replaceFragment(GameBoardFragment.newFragment())
-                        it.isChecked = true
-                        drawerLayout.closeDrawer(GravityCompat.START)
-                    }
-                    R.id.nav_action_history -> {
-                        it.isChecked = true
-                        drawerLayout.closeDrawer(GravityCompat.START)
-                    }
+                    R.id.nav_action_game -> replaceFragment(GameBoardFragment.newFragment())
+                    R.id.nav_action_history -> replaceFragment(HistoryFragment.newFragment())
                     R.id.nav_action_ranking -> {
-                        it.isChecked = true
-                        drawerLayout.closeDrawer(GravityCompat.START)
                     }
                     R.id.nav_action_profile -> {
-                        it.isChecked = true
-                        drawerLayout.closeDrawer(GravityCompat.START)
+
                     }
                 }
-            } else {
-                drawerLayout.closeDrawer(GravityCompat.START)
             }
+            drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
 
@@ -61,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.main_container, HistoryFragment.newFragment())
+                .replace(R.id.main_container, GameBoardFragment.newFragment())
                 .commit()
         }
     }

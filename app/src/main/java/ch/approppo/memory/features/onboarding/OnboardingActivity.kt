@@ -1,9 +1,11 @@
-package ch.approppo.memory
+package ch.approppo.memory.features.onboarding
 
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import ch.approppo.memory.features.home.MainActivity
+import ch.approppo.memory.R
 
 class OnboardingActivity : AppCompatActivity(), OnboardingFlowCallback {
 

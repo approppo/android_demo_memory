@@ -1,4 +1,4 @@
-package ch.approppo.memory
+package ch.approppo.memory.features.onboarding
 
 import android.content.Context
 import android.os.Bundle
@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import ch.approppo.memory.R
 
 class RegistrationFragment : Fragment() {
 

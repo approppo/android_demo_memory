@@ -1,4 +1,4 @@
-package ch.approppo.memory
+package ch.approppo.memory.features.onboarding
 
 
 /**

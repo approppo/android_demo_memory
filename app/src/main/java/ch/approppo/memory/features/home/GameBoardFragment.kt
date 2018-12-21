@@ -1,5 +1,6 @@
-package ch.approppo.memory
+package ch.approppo.memory.features.home
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import ch.approppo.memory.MemoryApp
+import ch.approppo.memory.R
+import ch.approppo.memory.data.HistoryRepository
 import kotlin.random.Random
 
 
@@ -32,6 +36,13 @@ class GameBoardFragment : Fragment() {
     private var firstCard: Button? = null
     private var secondCard: Button? = null
     private var matchedCards = mutableListOf<Button>()
+
+    private lateinit var historyRepository: HistoryRepository
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        historyRepository = (context?.applicationContext as? MemoryApp)?.getHistoryRepostory() ?: throw IllegalStateException("Cannot retrieve HistoryRepo")
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_gameboard, container, false)
@@ -104,6 +115,10 @@ class GameBoardFragment : Fragment() {
         if (firstCard!!.text == secondCard!!.text) {
             matchedCards.add(firstCard!!)
             matchedCards.add(secondCard!!)
+
+            if(matchedCards.size == cards.size) {
+                historyRepository.saveGame(count)
+            }
         }
     }
 }

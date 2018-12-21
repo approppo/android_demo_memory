@@ -1,9 +1,10 @@
-package ch.approppo.memory
+package ch.approppo.memory.features.onboarding
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import ch.approppo.memory.R
 
 class LoginActivity : AppCompatActivity() {
 

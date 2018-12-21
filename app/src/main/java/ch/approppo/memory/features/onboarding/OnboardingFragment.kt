@@ -1,4 +1,4 @@
-package ch.approppo.memory
+package ch.approppo.memory.features.onboarding
 
 import android.content.Context
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import ch.approppo.memory.R
 
 class OnboardingFragment : Fragment() {
 
