@@ -1,6 +1,7 @@
 package ch.approppo.memory.features.onboarding
 
 import android.content.Context
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -43,11 +44,22 @@ class TestFragment : Fragment() {
 
     private fun getScores() {
         tvOutput.text = ""
-        Thread {
-            val response = api.getScores()
-            requireActivity().runOnUiThread {
-                tvOutput.text = response
-            }
-        }.start()
+        AsyncExecutor(api) {
+            tvOutput.text = it
+        }.execute()
+    }
+}
+
+class AsyncExecutor(
+    private val api: MemoryAPI,
+    private val callback: ((String) -> Unit)
+) : AsyncTask<Void, Void, String>() {
+
+    override fun doInBackground(vararg params: Void?): String {
+        return api.getScores()
+    }
+
+    override fun onPostExecute(result: String?) {
+        callback(result ?: "")
     }
 }
