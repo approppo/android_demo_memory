@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import ch.approppo.memory.features.home.MainActivity
 import ch.approppo.memory.R
+import ch.approppo.memory.features.home.MainActivity
 
 class OnboardingActivity : AppCompatActivity(), OnboardingFlowCallback {
 
@@ -20,7 +20,8 @@ class OnboardingActivity : AppCompatActivity(), OnboardingFlowCallback {
         setContentView(R.layout.activity_onboarding)
 
         if (savedInstanceState == null) {
-            replaceFragment(OnboardingFragment.newFragment())
+//            replaceFragment(OnboardingFragment.newFragment())
+            replaceFragment(TestFragment())
         }
     }
 
