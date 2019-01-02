@@ -3,7 +3,6 @@ package ch.approppo.memory.data.api
 import android.content.Context
 import android.util.Log
 import ch.approppo.memory.R
-import ch.approppo.memory.entities.Score
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
@@ -31,7 +30,7 @@ class MemoryAPIImpl(
 
     }
 
-    override fun getScores(): List<Score> {
+    override fun getScores(): String {
 
         var con: HttpURLConnection? = null
         try {
@@ -39,12 +38,14 @@ class MemoryAPIImpl(
             con.connect()
             return when (con.responseCode) {
                 in 200..299 -> {
-                    Log.d(LOG_TAG, readStream(con.inputStream))
-                    emptyList()
+                    val response = readStream(con.inputStream)
+                    Log.d(LOG_TAG, response)
+                    response
                 }
                 else -> {
-                    Log.d(LOG_TAG, readStream(con.errorStream))
-                    emptyList()
+                    val response = readStream(con.errorStream)
+                    Log.d(LOG_TAG, response)
+                    response
                 }
             }
         } catch (t: Throwable) {
@@ -52,7 +53,7 @@ class MemoryAPIImpl(
         } finally {
             con?.disconnect()
         }
-        return emptyList()
+        return "Keine Antwort"
     }
 
     private fun readStream(stream: InputStream): String {

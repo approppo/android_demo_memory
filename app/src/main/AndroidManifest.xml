@@ -4,6 +4,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         package="ch.approppo.memory">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
             android:name=".MemoryApp"
             android:allowBackup="true"

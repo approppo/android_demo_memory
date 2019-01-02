@@ -1,7 +1,5 @@
 package ch.approppo.memory.data.api
 
-import ch.approppo.memory.entities.Score
-
 
 /**
  *
@@ -11,5 +9,5 @@ import ch.approppo.memory.entities.Score
  */
 interface MemoryAPI {
 
-    fun getScores(): List<Score>
+    fun getScores(): String
 }

@@ -35,9 +35,19 @@ class TestFragment : Fragment() {
 
         tvOutput = view.findViewById(R.id.tv_output)
         view.findViewById<Button>(R.id.bt_test_execute).setOnClickListener {
-            api.getScores()
+            getScores()
         }
 
         return view
+    }
+
+    private fun getScores() {
+        tvOutput.text = ""
+        Thread {
+            val response = api.getScores()
+            requireActivity().runOnUiThread {
+                tvOutput.text = response
+            }
+        }.start()
     }
 }
