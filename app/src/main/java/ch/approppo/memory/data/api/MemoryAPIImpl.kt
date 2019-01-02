@@ -16,7 +16,7 @@ import java.net.URL
  */
 class MemoryAPIImpl(
     private val url: String
-) : MemoryAPI {
+) {
 
     companion object {
 
@@ -25,12 +25,12 @@ class MemoryAPIImpl(
         class Builder(ctx: Context) {
             val url = ctx.getString(R.string.base_url)
 
-            fun build(): MemoryAPI = MemoryAPIImpl(url)
+            fun build(): MemoryAPIImpl = MemoryAPIImpl(url)
         }
 
     }
 
-    override fun getScores(): String {
+    fun getScores(): String {
 
         var con: HttpURLConnection? = null
         try {

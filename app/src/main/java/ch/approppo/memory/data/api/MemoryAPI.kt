@@ -1,5 +1,9 @@
 package ch.approppo.memory.data.api
 
+import ch.approppo.memory.entities.Score
+import retrofit2.Call
+import retrofit2.http.GET
+
 
 /**
  *
@@ -9,5 +13,6 @@ package ch.approppo.memory.data.api
  */
 interface MemoryAPI {
 
-    fun getScores(): String
+    @GET("highscore")
+    fun getScores(): Call<List<Score>>
 }
