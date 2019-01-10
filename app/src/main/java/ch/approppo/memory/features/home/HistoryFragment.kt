@@ -24,11 +24,11 @@ class HistoryFragment : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_history, container, false)
-        listView = view.findViewById(R.id.rv_history_list)
+        val view = inflater.inflate(R.layout.fragment_list, container, false)
+        listView = view.findViewById(R.id.list)
 
         val list = (requireActivity().application as MemoryApp).getHistoryRepostory().readHistory()
-        listView.adapter = HistoryAdapter(requireContext(), R.layout.listitem_layout, list.toMutableList())
+        listView.adapter = HistoryAdapter(requireContext(), R.layout.history_listitem_layout, list.toMutableList())
         return view
     }
 

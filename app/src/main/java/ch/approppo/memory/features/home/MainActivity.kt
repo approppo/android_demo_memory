@@ -34,8 +34,7 @@ class MainActivity : AppCompatActivity() {
                 when (it.itemId) {
                     R.id.nav_action_game -> replaceFragment(GameBoardFragment.newFragment())
                     R.id.nav_action_history -> replaceFragment(HistoryFragment.newFragment())
-                    R.id.nav_action_ranking -> {
-                    }
+                    R.id.nav_action_ranking -> replaceFragment(ScoresFragment.newFragment())
                     R.id.nav_action_profile -> {
 
                     }
